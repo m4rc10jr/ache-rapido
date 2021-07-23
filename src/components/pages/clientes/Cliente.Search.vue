@@ -116,10 +116,7 @@ export default {
             cliente.NomeCliente.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
             cliente.ApelidoCliente.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
             cliente.TipoOrigem.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
-            cliente.NumDocumento.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
             cliente.NomeRepresentante.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
-            cliente.TelefoneRepresentante.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
-            cliente.CelularRepresentante.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
             cliente.MunicipioCliente.toLowerCase().indexOf(this.search.toLowerCase()) > -1
           )
         });

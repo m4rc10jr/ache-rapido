@@ -195,7 +195,7 @@ export default {
             DataNascimento: { minLength: minLength(6) },
             TelefoneRepresentante: { minLength: minLength(11) },
             CelularRepresentante: { minLength: minLength(12) },
-            EnderecoCliente: { required = false },
+            EnderecoCliente: { required: false },
             MunicipioCliente: { required }
         }   
     },

@@ -13,7 +13,7 @@
             <div class="row">
                 <div id="cards-kpi" class="col-12">
                     <div class="shadow-sm p-3 mb-5 bg-white rounded">
-                        <b> Parcelas em atraso </b>
+                        <b> Parcelas em atraso (+7 dias após vencimento)</b>
                         <table class="table table-striped">
                             <thead>
                             <tr>
