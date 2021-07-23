@@ -20,8 +20,8 @@
                             <select disabled class="form-select" aria-label="Default select example" v-model="clientes.TipoOrigem">
                                 <option value="" disabled selected>Nenhum</option>
                                 <option value="Indicação"> Indicação </option>
-                                <option value="Renovação"> Renovação </option>
                                 <option value="Venda corrida"> Venda corrida </option>
+                                <option value="Desconhecida"> Desconhecida </option>
                             </select>
                         </div>
                         <div class="col-2">
@@ -158,6 +158,7 @@
                                 <option value="" disabled selected>Nenhum</option>
                                 <option value="1"> Guilherme </option>
                                 <option value="2"> Luizemar </option>
+                                <option value="3"> Desconhecido </option>
                             </select>
                             <p id="error-form" v-if="$v.contrato.IdVendedor.$error">* Valor nulo ou inválido</p>
                         </div>

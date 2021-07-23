@@ -21,8 +21,8 @@
                                 <select class="form-select" :class="{'fail-error' : $v.cliente.TipoOrigem.$error}" aria-label="Default select example" v-model="cliente.TipoOrigem" @change="$v.cliente.TipoOrigem.$touch()">
                                     <option value="" disabled selected>Nenhum</option>
                                     <option value="Indicação"> Indicação </option>
-                                    <option value="Renovação"> Renovação </option>
                                     <option value="Venda corrida"> Venda corrida </option>
+                                    <option value="Desconhecida"> Desconhecida </option>
                                 </select>
                                 <p id="error-form" v-if="$v.cliente.TipoOrigem.$error">* Valor nulo ou inválido</p>
                             </div>
@@ -88,14 +88,14 @@
                                 <div class="form-group mb-3">
                                     <label>Data de Nascimento</label>
                                     <input type="text" class="form-control" :class="{'fail-error' : $v.cliente.DataNascimento.$error}" v-mask="'##/##/####'" placeholder="dd/mm/aaaa" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="cliente.DataNascimento" @change="$v.cliente.DataNascimento.$touch()">
-                                    <p id="error-form" v-if="$v.cliente.DataNascimento.$error">* Valor nulo ou inválido</p>
+                                    <p id="error-form" v-if="$v.cliente.DataNascimento.$error">* Valor inválido</p>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-group mb-3">
                                     <label>Telefone Fixo</label>
                                     <input type="text" class="form-control" :class="{'fail-error' : $v.cliente.TelefoneRepresentante.$error}" v-mask="'(###) ####-####'" placeholder="(000) 0000-0000" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="cliente.TelefoneRepresentante" @change="$v.cliente.TelefoneRepresentante.$touch()">
-                                    <p id="error-form" v-if="$v.cliente.TelefoneRepresentante.$error">* Valor nulo ou inválido</p>
+                                    <p id="error-form" v-if="$v.cliente.TelefoneRepresentante.$error">* Valor inválido</p>
                                 </div>
                             </div>                
                         </div>
@@ -104,14 +104,14 @@
                                 <div class="form-group mb-3">
                                     <label>Celular</label>
                                     <input type="text" class="form-control" :class="{'fail-error' : $v.cliente.CelularRepresentante.$error}" v-mask="'(###) #####-####'" placeholder="(000) 00000-0000" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="cliente.CelularRepresentante" @change="$v.cliente.CelularRepresentante.$touch()">
-                                    <p id="error-form" v-if="$v.cliente.CelularRepresentante.$error">* Valor nulo ou inválido</p>
+                                    <p id="error-form" v-if="$v.cliente.CelularRepresentante.$error">* Valor inválido</p>
                                 </div>
                             </div>
                             <div class="col-5">
                                 <div class="form-group mb-3">
                                     <label>Endereço do Cliente</label>
                                     <input type="text" class="form-control" :class="{'fail-error' : $v.cliente.EnderecoCliente.$error}" placeholder="Digite o endereço completo" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="cliente.EnderecoCliente" @change="$v.cliente.EnderecoCliente.$touch()">
-                                    <p id="error-form" v-if="$v.cliente.EnderecoCliente.$error">* Valor nulo ou inválido</p>
+                                    <p id="error-form" v-if="$v.cliente.EnderecoCliente.$error">* Valor inválido</p>
                                 </div>
                             </div>
                             <div class="col-2">
@@ -279,10 +279,10 @@ export default {
             ApelidoCliente: { required },
             NomeRepresentante: { required },
             SexoRepresentante: { required },
-            DataNascimento: { required, minLength: minLength(10) },
-            TelefoneRepresentante: { required, minLength: minLength(11) },
-            CelularRepresentante: { required, minLength: minLength(12) },
-            EnderecoCliente: { required },
+            DataNascimento: { minLength: minLength(10) },
+            TelefoneRepresentante: { minLength: minLength(11) },
+            CelularRepresentante: { minLength: minLength(12) },
+            EnderecoCliente: { required = false },
             MunicipioCliente: { required }
         }   
     },
