@@ -292,8 +292,8 @@ export default {
           ValorPago: '',
           TipoPagamento: '',
           IdParcela: '',
-          CreatedAt: '',
-          UpdatedAt: '',
+          createdAt: '',
+          updatedAt: '',
           FK_Parcelas_Contratos: ''
         },
         parcelas: [],
@@ -352,8 +352,8 @@ export default {
                 var now = moment().format('YYYY-MM-DD hh:mm:ss')
 
                 this.recebimento.IdParcela = parseInt(this.$router.currentRoute.params.id)
-                this.recebimento.CreatedAt = now
-                this.recebimento.UpdatedAt = now
+                this.recebimento.createdAt = now
+                this.recebimento.updatedAt = now
                 
                 this.recebimento.DataPagamento = moment(this.recebimento.DataPagamento, "DDMMYYYY").format("YYYY-MM-DD");
                 this.recebimento.ValorPago = parseFloat(this.recebimento.ValorPago)

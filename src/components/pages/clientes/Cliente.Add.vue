@@ -176,8 +176,8 @@ export default {
           CelularRepresentante: '',
           EnderecoCliente: '',
           MunicipioCliente: '',
-          CreatedAt: '',
-          UpdatedAt: ''
+          createdAt: '',
+          updatedAt: ''
         },
         errors: []
       }
@@ -205,8 +205,8 @@ export default {
                     this.$v.$touch();
                 }else {
                     var now = moment().format('YYYY-MM-DD hh:mm:ss')
-                    this.cliente.CreatedAt = now
-                    this.cliente.UpdatedAt = now
+                    this.cliente.createdAt = now
+                    this.cliente.updatedAt = now
                     
                     this.cliente.DataNascimento = moment(this.cliente.DataNascimento, "DDMMYYYY").format("YYYY-MM-DD");
 

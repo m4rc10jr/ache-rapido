@@ -240,8 +240,8 @@ export default {
           QtdeMeses: null,
           QtdeParcelas: null,
           ValorContrato: null,
-          CreatedAt: '',
-          UpdatedAt: ''
+          createdAt: '',
+          updatedAt: ''
         },
         clientes: [],
         errors: [],
@@ -279,8 +279,8 @@ export default {
             }else {
             
                 var now = moment().format('YYYY-MM-DD hh:mm:ss')
-                this.contrato.CreatedAt = now
-                this.contrato.UpdatedAt = now
+                this.contrato.createdAt = now
+                this.contrato.updatedAt = now
 
                 this.contrato.IdCliente = parseInt(this.$router.currentRoute.params.id)
                 this.contrato.StatusPacote_Site = this.contrato.StatusPacote_Site.toString()

@@ -278,8 +278,8 @@ export default {
           NumParcela: '',
           DataPrevista: '',
           ValorParcela: '',
-          CreatedAt: '',
-          UpdatedAt: '',
+          createdAt: '',
+          updatedAt: '',
           FK_Parcelas_Contratos: '',
           FK_Recebimentos_Parcelas: ''
         },
@@ -329,6 +329,7 @@ export default {
             Cliente.listarPorId(Id).then(res => {
             console.log(res.data)
             this.clientes = res.data
+            this.clientes.DataNascimento = moment(this.clientes.DataNascimento, "YYYY-MM-DD").format("DDMMYYYY");
             this.clientes.createdAt = moment(this.clientes.createdAt, "YYYY-MM-DD hh:mm:ss").format("DD/MM/YYYY hh:mm");
             this.clientes.updatedAt = moment(this.clientes.updatedAt, "YYYY-MM-DD hh:mm:ss").format("DD/MM/YYYY hh:mm");
             })
@@ -339,9 +340,9 @@ export default {
                 }
             else {
                 var now = moment().format('YYYY-MM-DD hh:mm:ss')
-                this.parcela.UpdatedAt = now
-                
-                this.parcela.DataPrevista = moment(this.cliente.DataNascimento, "DDMMYYYY").format("YYYY-MM-DD");
+                this.parcela.updatedAt = now
+                this.parcela.createdAt = moment(this.parcela.createdAt, "DD/MM/YYYY hh:mm").format("YYYY-MM-DD hh:mm:ss");
+                this.parcela.DataPrevista = moment(this.parcela.DataPrevista, "DDMMYYYY").format("YYYY-MM-DD");
                 Parcela.atualizar(this.parcela).then(res => {
                 this.res = res
                 alert('Atualizado com sucesso!')

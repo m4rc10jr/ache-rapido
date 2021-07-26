@@ -299,8 +299,8 @@ export default {
           ValorPago: '',
           TipoPagamento: '',
           IdParcela: '',
-          CreatedAt: '',
-          UpdatedAt: '',
+          createdAt: '',
+          updatedAt: '',
           FK_Recebimentos_Parcelas: ''
         },
         errors: [],
@@ -367,17 +367,20 @@ export default {
             }
             else {
                 var now = moment().format('YYYY-MM-DD hh:mm:ss')
-                this.recebimento.UpdatedAt = now
-                
+                this.recebimento.updatedAt = now
+                this.recebimento.createdAt = moment(this.recebimento.createdAt, "DD/MM/YYYY hh:mm").format("YYYY-MM-DD hh:mm:ss");
+                this.recebimento.ValorPago = parseFloat(this.recebimento.ValorPago)
+                this.recebimento.TipoPagamento = this.recebimento.TipoPagamento.toString()
                 this.recebimento.DataPagamento = moment(this.recebimento.DataPagamento, "DDMMYYYY").format("YYYY-MM-DD");
                 Recebimento.atualizar(this.recebimento).then(res => {
                 this.res = res
                 alert('Atualizado com sucesso!')
+                this.$router.push({ path: '/recebimentos' })  
                 this.errors = []
                 }).catch( e => {
                     this.errors = e.response.data.errors
                 })
-            this.$router.push({ path: '/recebimentos' })  
+            
             }       
         }    
     }

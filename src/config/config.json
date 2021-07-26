@@ -1,0 +1,8 @@
+{
+    "development": {
+      "host": "http://localhost:8001/api"
+    },
+    "production": {
+      "host": "http://167.99.6.129:81/api"
+    }
+}

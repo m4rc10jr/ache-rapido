@@ -270,8 +270,8 @@ export default {
           DataPrevista: '',
           ValorParcela: '',
           IdContrato: '',
-          CreatedAt: '',
-          UpdatedAt: ''
+          createdAt: '',
+          updatedAt: ''
         },
         contratos: [],
         clientes: [],
@@ -317,8 +317,8 @@ export default {
                 this.parcela.ValorParcela = this.valor_parcelas[i];
                 
                 this.parcela.IdContrato = parseInt(this.$router.currentRoute.params.id)
-                this.parcela.CreatedAt = now
-                this.parcela.UpdatedAt = now
+                this.parcela.createdAt = now
+                this.parcela.updatedAt = now
 
                 this.parcela.NumParcela = parseFloat(this.parcela.NumParcela)
                 this.parcela.ValorParcela = parseFloat(this.parcela.ValorParcela)

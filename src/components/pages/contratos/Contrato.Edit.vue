@@ -297,8 +297,8 @@ export default {
           FK_Contratos_Vendedores: '',
           FK_Parcelas_Contratos: '',
           FK_Recebimentos_Parcelas: '',
-          CreatedAt: '',
-          UpdatedAt: '',
+          createdAt: '',
+          updatedAt: '',
           DeletedAt: ''
         },
         errors: [],
@@ -356,8 +356,8 @@ export default {
                 }
             else {
                 var now = moment().format('YYYY-MM-DD hh:mm:ss')
-                this.contrato.UpdatedAt = now
-                
+                this.contrato.updatedAt = now
+                this.contrato.createdAt = moment(this.contrato.createdAt, "DD/MM/YYYY hh:mm").format("YYYY-MM-DD hh:mm:ss");
                 this.contrato.IdCliente = parseInt(this.contrato.IdCliente)
                 this.contrato.StatusPacote_Site = this.contrato.StatusPacote_Site.toString()
                 this.contrato.StatusPacote_Lista = this.contrato.StatusPacote_Lista.toString()

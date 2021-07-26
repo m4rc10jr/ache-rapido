@@ -27,7 +27,7 @@
             </select>
           </div>
           <div id="div-button-add" class="col-1">
-            <b-button id="button-add" v-b-modal.modal-1 @click="sortByNomeCliente()" type="button" class="btn btn-primary">+ Novo</b-button>
+            <b-button id="button-add" v-b-modal.modal-1 @click="listarClientes()" type="button" class="btn btn-primary">+ Novo</b-button>
           </div>
         </div>
         <div class="row">
@@ -75,14 +75,14 @@
           <p>Selecione um cliente para continuar:</p>
           <div class="row">
             <div class="col-12">
-              <select v-model="contrato.IdCliente" class="form-select" aria-label="Default select example">
-                <option :value="contrato.IdCliente" v-for="contrato of contratos" :key="contrato.IdCliente">{{contrato.NomeCliente}}</option>
+              <select v-model="clientes.IdCliente" class="form-select" aria-label="Default select example">
+                <option :value="cliente.IdCliente" v-for="cliente of clientes" :key="cliente.IdCliente">{{cliente.NomeCliente}}</option>
               </select>
             </div>
           </div>
           <template v-slot:modal-footer="{ close }">
             <b-button @click="close()">Cancelar</b-button>
-            <router-link :to ="'/cliente/' + contrato.IdCliente + '/contrato/cadastrar'"><b-button>Continuar</b-button></router-link>
+            <router-link :to ="'/cliente/' + clientes.IdCliente + '/contrato/cadastrar'"><b-button>Continuar</b-button></router-link>
           </template>
         </b-modal>
       </div>
@@ -91,6 +91,7 @@
 
 <script>
 import Contrato from '@/services/contratos';
+import Cliente from '@/services/clientes';
 
 export default {
     name: 'ContratoSearch',
@@ -99,17 +100,22 @@ export default {
       return {
         searchContratos: '',
         contratos: [],
+        clientes: [],
         errors: [],
         selectedModal: null,
         selectedFilterSelect: "Nenhum",
         contrato: {
           IdContrato: ''
+        },
+        cliente: {
+          idCliente: ''
         }
       }
     },
 
     mounted(){
       this.listarContratos()
+      this.listarClientes()
     },
 
     computed: {
@@ -139,9 +145,13 @@ export default {
           this.contratos = res.data
         })
       },
-      sortByNomeCliente(){
-          this.contratos.sort((contrato1,contrato2) => contrato1.NomeCliente < contrato2.NomeCliente ? -1 : 1)
-      }
+      listarClientes(){
+          Cliente.listar().then(res => {
+          console.log(res.data)
+          this.clientes = res.data
+          this.clientes.sort((cliente1,cliente2) => cliente1.NomeCliente < cliente2.NomeCliente ? -1 : 1)
+        })
+      },
     },
 }
 </script>
