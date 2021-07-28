@@ -1,8 +1,8 @@
 {
-    "development": {
+    "dev": {
       "host": "http://localhost:8001/api"
     },
-    "production": {
+    "prod": {
       "host": "http://167.99.6.129:81/api"
     }
 }
