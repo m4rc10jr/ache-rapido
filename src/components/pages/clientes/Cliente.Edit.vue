@@ -253,10 +253,10 @@ export default {
           ApelidoCliente: '',
           NomeRepresentante: '',
           SexoRepresentante: '',
-          DataNascimento: '',
-          TelefoneRepresentante: '',
-          CelularRepresentante: '',
-          EnderecoCliente: '',
+          DataNascimento: null,
+          TelefoneRepresentante: null,
+          CelularRepresentante: null,
+          EnderecoCliente: null,
           MunicipioCliente: '',
           createdAt: '',
           updatedAt: '',
@@ -295,7 +295,11 @@ export default {
             Cliente.listarPorId(this.$route.params.id).then(res => {
             console.log(res.data)
             this.cliente = res.data
-            this.cliente.DataNascimento = moment(this.cliente.DataNascimento, "YYYY-MM-DD").format("DDMMYYYY");
+            if(this.cliente.DataNascimento != null){
+                        this.cliente.DataNascimento = moment(this.cliente.DataNascimento, "YYYY-MM-DD").format("DDMMYYYY");
+            } else {
+                this.cliente.DataNascimento = null
+            }
             this.cliente.createdAt = moment(this.cliente.createdAt, "YYYY-MM-DD hh:mm:ss").format("DD/MM/YYYY hh:mm");
             this.cliente.updatedAt = moment(this.cliente.updatedAt, "YYYY-MM-DD hh:mm:ss").format("DD/MM/YYYY hh:mm");
             this.listarContratos(this.cliente.IdCliente)
@@ -329,7 +333,12 @@ export default {
                     this.cliente.updatedAt = now
                     this.cliente.createdAt = moment(this.cliente.createdAt, "DD/MM/YYYY hh:mm").format("YYYY-MM-DD hh:mm:ss");
                     
-                    this.cliente.DataNascimento = moment(this.cliente.DataNascimento, "DDMMYYYY").format("YYYY-MM-DD");
+                    if(this.cliente.DataNascimento != null){
+                        this.cliente.DataNascimento = moment(this.cliente.DataNascimento, "DDMMYYYY").format("YYYY-MM-DD");
+                    } else {
+                        this.cliente.DataNascimento = null
+                    }
+                    
                     Cliente.atualizar(this.cliente).then(res => {
                     this.res = res
                     alert('Cliente cadastrado com sucesso')

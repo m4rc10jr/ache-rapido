@@ -171,10 +171,10 @@ export default {
           ApelidoCliente: '',
           NomeRepresentante: '',
           SexoRepresentante: '',
-          DataNascimento: '',
-          TelefoneRepresentante: '',
-          CelularRepresentante: '',
-          EnderecoCliente: '',
+          DataNascimento: null,
+          TelefoneRepresentante: null,
+          CelularRepresentante: null,
+          EnderecoCliente: null,
           MunicipioCliente: '',
           createdAt: '',
           updatedAt: ''
@@ -208,7 +208,11 @@ export default {
                     this.cliente.createdAt = now
                     this.cliente.updatedAt = now
                     
-                    this.cliente.DataNascimento = moment(this.cliente.DataNascimento, "DDMMYYYY").format("YYYY-MM-DD");
+                    if(this.cliente.DataNascimento != null){
+                        this.cliente.DataNascimento = moment(this.cliente.DataNascimento, "DDMMYYYY").format("YYYY-MM-DD");
+                    } else {
+                        this.cliente.DataNascimento = null
+                    }
 
                     Cliente.salvar(this.cliente).then(res => {
                     this.res = res

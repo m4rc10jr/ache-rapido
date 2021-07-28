@@ -24,6 +24,7 @@
                                         <th scope="col">Data</th>
                                         <th scope="col">Valor</th>
                                         <th scope="col">Pago</th>
+                                        <th scope="col">Atraso</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -34,6 +35,7 @@
                                         <td>{{parcela.DataPrevista}}</td>
                                         <td>{{parcela.ValorParcela}}</td>
                                         <td>{{parcela.TotalValorPago}}</td>
+                                        <td>{{parcela.TotalValorAtraso}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
