@@ -186,6 +186,14 @@
                         </div>
                         <div class="col-2">
                             <div class="form-group mb-3">
+                                <label>Data de Cancelamento</label>
+                                <input disabled type="text" class="form-control" v-mask="'##/##/####'" placeholder="dd/mm/aaaa" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="contratos.DataCancelamento">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group mb-3">
                                 <label>Registrado em</label>
                                 <input disabled type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="contratos.createdAt">
                             </div>
@@ -333,6 +341,7 @@ export default {
                 this.contratos.StatusPacote_Site = JSON.parse(this.contratos.StatusPacote_Site)
                 this.contratos.StatusPacote_Lista = JSON.parse(this.contratos.StatusPacote_Lista)
                 this.contratos.StatusPacote_RedeSocial = JSON.parse(this.contratos.StatusPacote_RedeSocial)
+                this.contratos.DataCancelamento = moment(this.contratos.DataCancelamento, "YYYY-MM-DD").format("DD/MM/YYYY");
                 this.listarCliente(this.contratos.IdCliente)
             })
         },

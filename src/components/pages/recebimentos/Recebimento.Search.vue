@@ -127,7 +127,8 @@ export default {
           Parcela.listar().then(res => {
           console.log(res.data)
           this.parcelas = res.data
-          this.parcelas.sort((parcela1,parcela2) => (parcela1.CodContrato + '-' + parcela1.NumParcela) <  (parcela2.CodContrato + '-' + parcela2.NumParcela) ? -1 : 1)
+          this.parcelas.sort((parcela1,parcela2) => (parcela1.NumParcela) <  (parcela2.NumParcela) ? -1 : 1)
+          this.parcelas.sort((parcela1,parcela2) => (parcela1.CodContrato) <  (parcela2.CodContrato) ? -1 : 1)
         })
       }
     }

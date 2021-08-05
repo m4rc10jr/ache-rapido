@@ -192,11 +192,10 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <div class="col-2">
-                                <div class="form-group mb-3">
-                                    <label>Data de Cancelamento</label>
-                                    <input type="text" class="form-control" v-mask="'##/##/####'" placeholder="dd/mm/aaaa" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="contrato.DataCancelamento">
-                                </div>
+                            <div class="form-group mb-3">
+                                <label>Data de Cancelamento</label>
+                                <input type="text" class="form-control" :class="{'fail-error' : $v.contrato.DataCancelamento.$error}" placeholder="dd/mm/aaaa" v-mask="'##/##/####'" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="contrato.DataCancelamento" @change="$v.contrato.DataCancelamento.$touch()">
+                                <p id="error-form" v-if="$v.contrato.DataCancelamento.$error">* Valor inválido</p>
                             </div>
                         </div>
                     </div>
@@ -307,7 +306,7 @@ export default {
           FK_Contratos_Vendedores: '',
           FK_Parcelas_Contratos: '',
           FK_Recebimentos_Parcelas: '',
-          DataCancelamento: '',
+          DataCancelamento: null,
           createdAt: '',
           updatedAt: '',
           DeletedAt: ''
@@ -368,6 +367,9 @@ export default {
                     this.$v.$touch();
                 }
             else {
+                if(this.contrato.DataCancelamento != null){
+                    this.contrato.DataCancelamento = moment(this.contrato.DataCancelamento, "DD/MM/YYYY").format("YYYY-MM-DD");
+                }
                 var now = moment().format('YYYY-MM-DD hh:mm:ss')
                 this.contrato.updatedAt = now
                 this.contrato.createdAt = moment(this.contrato.createdAt, "DD/MM/YYYY hh:mm").format("YYYY-MM-DD hh:mm:ss");
@@ -380,8 +382,6 @@ export default {
                 this.contrato.QtdeMeses = parseInt(this.contrato.QtdeMeses)
                 this.contrato.QtdeParcelas = parseInt(this.contrato.QtdeParcelas)
                 this.contrato.ValorContrato = parseFloat(this.contrato.ValorContrato)
-                this.contrato.DataCancelamento = moment(this.contrato.DataCancelamento, "DD/MM/YYYY").format("YYYY-MM-DD");
-
                 Contrato.atualizar(this.contrato).then(res => {
                 this.res = res
                 alert('Atualizado com sucesso!')
@@ -391,6 +391,7 @@ export default {
                 })  
         
                 this.$router.push({ path: '/contratos' })
+            
             }     
         }
     }
