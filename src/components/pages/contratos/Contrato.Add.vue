@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-3">
                             <div class="form-group mb-3">
-                                <label>Contato Principal</label>
+                                <label>Nome Representante</label>
                                 <input disabled type="text" class="form-control" placeholder="Digite um Representante" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="clientes.NomeRepresentante">
                             </div>
                         </div>

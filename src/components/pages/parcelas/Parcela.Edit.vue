@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-3">
                             <div class="form-group mb-3">
-                                <label>Contato Principal</label>
+                                <label>Nome Representante</label>
                                 <input disabled type="text" class="form-control" placeholder="Digite um Representante" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="clientes.NomeRepresentante">
                             </div>
                         </div>
@@ -225,6 +225,9 @@
                     </div>
                     <div class="row">
                         <div class="col-3">
+                            <button id="button-delete" @click="excluirParcelas()" class="btn btn-primary">Excluir</button>
+                        </div>
+                        <div class="col-3">
                             <button id="button-save" @click="salvarParcelas()" class="btn btn-primary">Atualizar</button>
                         </div>
                     </div>
@@ -353,6 +356,11 @@ export default {
 
                 this.$router.push({ path: '/parcelas' })
             }      
+        },
+        excluirParcelas(){
+            Parcela.apagar(this.parcela.IdParcela)
+            alert('Parcela excluida com sucesso!')
+            this.$router.push({ path: '/parcelas' })
         }    
     }
 }

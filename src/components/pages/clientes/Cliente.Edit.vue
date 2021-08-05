@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="form-group mb-3">
-                                    <label>Contato Principal</label>
+                                    <label>Nome Representante</label>
                                     <input type="text" class="form-control" :class="{'fail-error' : $v.cliente.NomeRepresentante.$error}" placeholder="Digite um Representante" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="cliente.NomeRepresentante" @change="$v.cliente.NomeRepresentante.$touch()">
                                     <p id="error-form" v-if="$v.cliente.NomeRepresentante.$error">* Valor nulo ou inválido</p>
                                 </div>

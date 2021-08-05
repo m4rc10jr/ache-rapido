@@ -71,8 +71,13 @@
           <p>Selecione um contrato para continuar:</p>
           <div class="row">
             <div class="col-12">
+              <label> Cliente </label>
               <select v-model="contrato.IdContrato" class="form-select" aria-label="Default select example">
-                <option :value="contrato.IdContrato" v-for="contrato of contratos" :key="contrato.IdContrato"> Contrato: {{contrato.CodContrato}} | Cliente: {{contrato.NomeCliente}}</option>
+                <option :value="contrato.IdContrato" v-for="contrato of contratos" :key="contrato.IdContrato"> {{contrato.NomeCliente}} </option>
+              </select>
+              <label> Contrato </label>
+              <select v-model="contrato.IdContrato" class="form-select" aria-label="Default select example">
+                <option :value="contrato.IdContrato" v-for="contrato of contratos" :key="contrato.IdContrato"> {{contrato.CodContrato}} </option>
               </select>
             </div>
           </div>

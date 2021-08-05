@@ -24,6 +24,7 @@
               <option value="Vigente"> Vigentes </option>
               <option value="Finalizado"> Finalizados </option>
               <option value="Previsto"> Previstos </option>
+              <option value="Cancelado"> Cancelados </option>
             </select>
           </div>
           <div id="div-button-add" class="col-1">

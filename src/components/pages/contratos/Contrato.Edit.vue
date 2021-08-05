@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-3">
                             <div class="form-group mb-3">
-                                <label>Contato Principal</label>
+                                <label>Nome Representante</label>
                                 <input disabled type="text" class="form-control" placeholder="Digite um Representante" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="contrato.FK_Contratos_Clientes.NomeRepresentante">
                             </div>
                         </div>
@@ -190,7 +190,17 @@
                                 <input id="ValorContrato" type="text" class="form-control" :class="{'fail-error' : $v.contrato.ValorContrato.$error}" placeholder="R$" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="contrato.ValorContrato" @change="$v.contrato.ValorContrato.$touch()">
                                 <p id="error-form" v-if="$v.contrato.ValorContrato.$error">* Valor nulo ou inválido</p>
                             </div>
-                        </div>              
+                        </div>
+                        <div class="col-2">
+                            <div class="col-2">
+                                <div class="form-group mb-3">
+                                    <label>Data de Cancelamento</label>
+                                    <input type="text" class="form-control" v-mask="'##/##/####'" placeholder="dd/mm/aaaa" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="contrato.DataCancelamento">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">              
                         <div class="col-2">
                             <div class="form-group mb-3">
                                 <label>Registrado em</label>
@@ -297,6 +307,7 @@ export default {
           FK_Contratos_Vendedores: '',
           FK_Parcelas_Contratos: '',
           FK_Recebimentos_Parcelas: '',
+          DataCancelamento: '',
           createdAt: '',
           updatedAt: '',
           DeletedAt: ''
@@ -314,7 +325,8 @@ export default {
             VigenciaInicial: { required, minLength: minLength(10) },
             QtdeMeses: { required, minValue: minValue(1), integer },
             QtdeParcelas: { required, minValue: minValue(1), integer },
-            ValorContrato: { required, decimal }
+            ValorContrato: { required, decimal },
+            DataCancelamento: { minLength: minLength(10) },
         }   
     },
 
@@ -336,6 +348,7 @@ export default {
             this.contrato.StatusPacote_RedeSocial = JSON.parse(this.contrato.StatusPacote_RedeSocial)
             this.listarRecebimentos(this.contrato.IdContrato)
             this.listarParcelas(this.contrato.IdContrato)
+            this.contrato.DataCancelamento = moment(this.contrato.DataCancelamento, "YYYY-MM-DD").format("DD/MM/YYYY");
             })
         },
         listarRecebimentos(Id){
@@ -367,6 +380,7 @@ export default {
                 this.contrato.QtdeMeses = parseInt(this.contrato.QtdeMeses)
                 this.contrato.QtdeParcelas = parseInt(this.contrato.QtdeParcelas)
                 this.contrato.ValorContrato = parseFloat(this.contrato.ValorContrato)
+                this.contrato.DataCancelamento = moment(this.contrato.DataCancelamento, "DD/MM/YYYY").format("YYYY-MM-DD");
 
                 Contrato.atualizar(this.contrato).then(res => {
                 this.res = res

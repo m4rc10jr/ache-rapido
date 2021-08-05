@@ -23,6 +23,7 @@ import RecebimentoSearch from '@/components/pages/recebimentos/Recebimento.Searc
 import RecebimentoAdd from '@/components/pages/recebimentos/Recebimento.Add.vue';
 import RecebimentoEdit from '@/components/pages/recebimentos/Recebimento.Edit.vue';
 
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
