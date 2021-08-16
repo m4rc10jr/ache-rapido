@@ -25,8 +25,8 @@ export default {
         return http.put('parcelas/' + parcela.IdParcela, parcela)
     },
 
-    apagar:(parcela) => {
-        return http.delete('parcelas/' + parcela.IdParcela)
+    apagar:(IdParcela) => {
+        return http.delete('parcelas/' + IdParcela)
     },
     listarAtrasos:() => {
         return http.get('parcelas/relatorios/atrasos')

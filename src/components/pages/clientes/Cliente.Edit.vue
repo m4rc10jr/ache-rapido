@@ -347,7 +347,7 @@ export default {
                         this.errors = e.response.data.errors
                 })
             
-            this.$router.push({ path: '/clientes' })
+                setTimeout( () => this.$router.push({ path: '/clientes' }), 3000);
             }     
         } 
     }

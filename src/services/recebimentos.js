@@ -25,7 +25,7 @@ export default {
         return http.put('recebimentos/' + recebimento.IdRecebimento, recebimento)
     },
 
-    apagar:(recebimento) => {
-        return http.delete('recebimentos/' + recebimento.IdRecebimento)
+    apagar:(IdRecebimento) => {
+        return http.delete('recebimentos/' + IdRecebimento)
     }
 }

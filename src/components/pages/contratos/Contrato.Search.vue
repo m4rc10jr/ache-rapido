@@ -32,40 +32,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12">      
-            <div id="table-search" class="shadow-sm p-3 mb-5 bg-white rounded">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Contrato</th>                    
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Plano</th>
-                    <th scope="col">Início</th>
-                    <th scope="col">Fim</th>
-                    <th scope="col">Valor Contrato</th>
-                    <th scope="col">Valor Pago</th>
-                    <th scope="col">Valor Atraso</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Ação</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="contrato of filteredContratos" :key="contrato.IdContrato">
-                    <td>{{contrato.CodContrato}}</td>
-                    <td>{{contrato.NomeCliente}}</td>
-                    <td>{{contrato.PacoteContratado}}</td>
-                    <td>{{contrato.VigenciaInicial}}</td>
-                    <td>{{contrato.VigenciaFinal}}</td>
-                    <td>{{contrato.ValorContrato}}</td>
-                    <td>{{contrato.TotalValorPago}}</td>
-                    <td>{{contrato.TotalValorAtraso}}</td>
-                    <td>{{contrato.StatusContrato}}</td>
-                    <td>
-                      <router-link :to="'/contratos/editar/' + contrato.IdContrato"><button class="btn btn-link"><b-icon id="search-icon" icon="search"></b-icon></button></router-link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <div id="table-search" class="shadow-sm">
+            <div class="col-12">
+              <b-table :bordered="true" outlined hover label-sort-desc="" label-sort-asc="" label-sort-clear="" :items="filteredContratos" :fields="ColunasTabelaView">             
+                <template v-slot:cell()="data">
+                  <router-link :to="`/contratos/editar/${data.item.IdContrato}`">{{ data.value }}</router-link>
+                </template>
+              </b-table>      
             </div>
           </div>
         </div>
@@ -110,7 +83,18 @@ export default {
         },
         cliente: {
           idCliente: ''
-        }
+        },
+        ColunasTabelaView: [
+          { key: 'CodContrato', label: 'Contrato', sortable: true },
+          { key: 'NomeCliente', label: 'Cliente', sortable: true },
+          { key: 'PacoteContratado', label: 'Plano', sortable: true },
+          { key: 'VigenciaInicial', label: 'Início', sortable: true },
+          { key: 'VigenciaFinal', label: 'Fim', sortable: true },
+          { key: 'ValorContrato', label: 'Contrato', sortable: true },
+          { key: 'TotalValorPago', label: 'Pago', sortable: true },
+          { key: 'TotalValorAtraso', label: 'Atraso', sortable: true },
+          { key: 'StatusContrato', label: 'Status', sortable: true }
+        ]
       }
     },
 
@@ -184,4 +168,8 @@ export default {
     color: var(--color-background-buttons);
   }
   
+  a{ 
+    text-decoration: none; 
+    color: var(--color-text-dark);
+  }
 </style>

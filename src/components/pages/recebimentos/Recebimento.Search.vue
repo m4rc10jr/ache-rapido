@@ -23,38 +23,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12">      
-            <div id="table-search" class="shadow-sm p-3 mb-5 bg-white rounded">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Contrato</th>
-                    <th scope="col">Parcela</th>
-                    <th scope="col">Previsão</th>
-                    <th scope="col">Pagamento</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Ação</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="recebimento of filteredRecebimentos" :key="recebimento.IdRecebimento">
-                    <td>{{recebimento.NomeCliente}}</td>
-                    <td>{{recebimento.CodContrato}}</td>
-                    <td>{{recebimento.NumParcela}}</td>
-                    <td>{{recebimento.DataPrevista}}</td>
-                    <td>{{recebimento.DataPagamento}}</td>
-                    <td>{{recebimento.ValorPago}}</td>
-                    <td>{{recebimento.TipoPagamento}}</td>
-                    <td>{{recebimento.StatusPagamento}}</td>
-                    <td>
-                      <router-link :to="'/recebimentos/editar/' + recebimento.IdRecebimento"><button class="btn btn-link"><b-icon id="search-icon" icon="search"></b-icon></button></router-link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <div id="table-search" class="shadow-sm">
+            <div class="col-12">
+              <b-table :bordered="true" outlined hover label-sort-desc="" label-sort-asc="" label-sort-clear="" :items="filteredRecebimentos" :fields="ColunasTabelaView">             
+                <template v-slot:cell()="data">
+                  <router-link :to="`/recebimentos/editar/${data.item.IdRecebimento}`">{{ data.value }}</router-link>
+                </template>
+              </b-table>      
             </div>
           </div>
         </div>
@@ -62,17 +37,33 @@
       <!-- Modal para selecionar qual Contrato associar -->
       <div>
         <b-modal id="modal-1" hide-header>
-          <p>Selecione uma parcela para continuar:</p>
           <div class="row">
+            <p>Selecione um cliente:</p>
             <div class="col-12">
-              <select v-model="parcela.IdParcela" class="form-select" aria-label="Default select example">
-                <option :value="parcela.IdParcela" v-for="parcela of parcelas" :key="parcela.IdParcela">Contrato: {{parcela.CodContrato}} | Parcela: {{parcela.NumParcela}}</option>
+              <select v-model="clienteSelected" class="form-select" aria-label="Default select example">
+                <option :value="parcela.NomeCliente" v-for="parcela of filteredClientes" :key="parcela.NomeCliente">{{parcela.NomeCliente}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <p>Selecione um contrato:</p>
+            <div class="col-12">
+              <select v-model="contratoSelected" class="form-select" aria-label="Default select example">
+                <option :value="parcela.CodContrato" v-for="parcela of filteredContratos" :key="parcela.CodContrato">{{parcela.CodContrato}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <p>Selecione uma parcela:</p>
+            <div class="col-12">
+              <select v-model="parcelaSelected" class="form-select" aria-label="Default select example">
+                <option :value="parcela.IdParcela" v-for="parcela of filteredParcelas" :key="parcela.IdParcela">{{parcela.NumParcela}}</option>
               </select>
             </div>
           </div>
           <template v-slot:modal-footer="{ close }">
             <b-button @click="close()">Cancelar</b-button>
-            <router-link :to ="'/parcela/' + parcela.IdParcela + '/recebimento/cadastrar'"><b-button>Continuar</b-button></router-link>
+            <b-button @click="criarRecebimentos(parcelaSelected)">Continuar</b-button>
           </template>
         </b-modal>
       </div>
@@ -94,7 +85,21 @@ export default {
         errors: [],
         parcela: {
           IdParcela: ''
-        }
+        },
+        clienteSelected: '',
+        contratoSelected: '',
+        parcelaSelected: '',
+        filteredClientes: [],
+        ColunasTabelaView: [
+          { key: 'NomeCliente', label: 'Nome Cliente', sortable: true },
+          { key: 'CodContrato', label: 'Cod Contrato', sortable: true },
+          { key: 'NumParcela', label: 'Num Parcela', sortable: true },
+          { key: 'DataPrevista', label: 'Data Parcela', sortable: true },
+          { key: 'DataPagamento', label: 'Data Pagamento', sortable: true },
+          { key: 'ValorParcela', label: 'Valor Parcela', sortable: true },
+          { key: 'ValorPago', label: 'Valor Pago', sortable: true },
+          { key: 'TipoPagamento', label: 'Tipo Pagamento', sortable: true },
+          { key: 'StatusPagamento', label: 'Status', sortable: true }        ]
       }
     },
 
@@ -113,9 +118,28 @@ export default {
           )
         })
         return valores;
+      },
+      filteredContratos(){
+        let valores = [];
+        let x = this.clienteSelected;
+        let valoresFinal;
+
+        valores = this.parcelas.filter(function (parcela) { return (parcela.NomeCliente === x)})
+
+        valoresFinal = [...new Map(valores.map(item => [item['CodContrato'], item])).values()];
+        return valoresFinal;
+      },
+      filteredParcelas(){
+        let valores = [];
+        let x = this.contratoSelected;
+        let valoresFinal;
+
+        valores = this.parcelas.filter(function (parcela) { return (parcela.CodContrato === x)})
+        
+        valoresFinal = [...new Map(valores.map(item => [item['NumParcela'], item])).values()];
+        return valoresFinal
       }
     },
-
     methods:{
       listarRecebimentos(){
           Recebimento.listar().then(res => {
@@ -129,7 +153,17 @@ export default {
           this.parcelas = res.data
           this.parcelas.sort((parcela1,parcela2) => (parcela1.NumParcela) <  (parcela2.NumParcela) ? -1 : 1)
           this.parcelas.sort((parcela1,parcela2) => (parcela1.CodContrato) <  (parcela2.CodContrato) ? -1 : 1)
+
+          this.filteredClientes = [...new Map(this.parcelas.map(item => [item['NomeCliente'], item])).values()];
+          this.filteredClientes.sort((filteredClientes1,filteredClientes2) => (filteredClientes1.NomeCliente < filteredClientes2.NomeCliente) ? -1 : 1)
         })
+      },
+      criarRecebimentos(IdParcela){
+        if(IdParcela == null || IdParcela == ''){
+          alert('Selecione uma parcela antes de continuar!')
+        } else {
+          this.$router.push({ path: '/parcela/' + IdParcela + '/recebimento/cadastrar' })
+        }
       }
     }
 }
@@ -160,6 +194,11 @@ export default {
 
   #search-icon{
     color: var(--color-background-buttons);
+  }
+
+  a{ 
+    text-decoration: none; 
+    color: var(--color-text-dark);
   }
 
 </style>

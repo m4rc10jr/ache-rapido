@@ -363,13 +363,13 @@ export default {
                     this.errors = e.response.data.errors
                 }) 
 
-                this.$router.push({ path: '/parcelas' })
+                setTimeout( () => this.$router.push({ path: '/parcelas' }), 3000);
             }      
         },
         excluirParcelas(){
             Parcela.apagar(this.parcela.IdParcela)
             alert('Parcela excluida com sucesso!')
-            this.$router.push({ path: '/parcelas' })
+            setTimeout( () => this.$router.push({ path: '/parcelas' }), 3000);
         }    
     }
 }

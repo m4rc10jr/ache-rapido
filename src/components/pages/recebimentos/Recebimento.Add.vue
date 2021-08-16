@@ -376,7 +376,7 @@ export default {
                         this.errors = e.response.data.errors
                 }) 
 
-                this.$router.push({ path: '/recebimentos' })
+                setTimeout( () => this.$router.push({ path: '/recebimentos' }), 3000);
             }        
         }
     }

@@ -271,7 +271,7 @@
                     </div>
                     <div class="row">
                         <div class="col-3">
-                            <button id="button-delete" @click="excluirRecebimento()" class="btn btn-primary">Excluir</button>
+                            <button id="button-delete" @click="excluirRecebimentos()" class="btn btn-primary">Excluir</button>
                         </div>
                         <div class="col-3">
                             <button id="button-save" @click="salvarRecebimento()" class="btn btn-primary">Atualizar</button>
@@ -387,7 +387,7 @@ export default {
                 Recebimento.atualizar(this.recebimento).then(res => {
                 this.res = res
                 alert('Atualizado com sucesso!')
-                this.$router.push({ path: '/recebimentos' })  
+                setTimeout( () => this.$router.push({ path: '/recebimentos' }), 3000);
                 this.errors = []
                 }).catch( e => {
                     this.errors = e.response.data.errors
@@ -398,7 +398,7 @@ export default {
         excluirRecebimentos(){
             Recebimento.apagar(this.recebimento.IdRecebimento)
             alert('Recebimento excluido com sucesso!')
-            this.$router.push({ path: '/recebimentos' })
+            setTimeout( () => this.$router.push({ path: '/recebimentos' }), 3000);
         }    
     }
 }

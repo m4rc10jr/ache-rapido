@@ -31,46 +31,12 @@
         </div>
         <div class="row">
           <div id="table-search" class="shadow-sm">
-            <div class="col-12"> 
-<!-- 
-              <b-table outlined hover label-sort-desc="" label-sort-asc="" label-sort-clear="" :items="filteredClientes" :fields="ColunasTabelaView">
-                <template v-slot:cell(NomeCliente)="data">
-                  <router-link :to="`/clientes/editar/' + ${data.value}`">{{ data.value }}</router-link>
+            <div class="col-12">
+              <b-table :bordered="true" outlined hover label-sort-desc="" label-sort-asc="" label-sort-clear="" :items="filteredClientes" :fields="ColunasTabelaView">             
+                <template v-slot:cell()="data">
+                  <router-link :to="`/clientes/editar/${data.item.IdCliente}`">{{ data.value }}</router-link>
                 </template>
               </b-table>
---> 
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Apelido</th>
-                    <th scope="col">Origem</th>
-                    <th scope="col">Documento</th>
-                    <th scope="col">Representante</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">Celular</th>
-                    <th scope="col">Município</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Ação</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="cliente of filteredClientes" :key="cliente.IdCliente">
-                    <td>{{cliente.NomeCliente}}</td>
-                    <td>{{cliente.ApelidoCliente}}</td>
-                    <td>{{cliente.TipoOrigem}}</td>
-                    <td>{{cliente.NumDocumento}}</td>
-                    <td>{{cliente.NomeRepresentante}}</td>
-                    <td>{{cliente.TelefoneRepresentante}}</td>
-                    <td>{{cliente.CelularRepresentante}}</td>
-                    <td>{{cliente.MunicipioCliente}}</td>
-                    <td>{{cliente.StatusCliente}}</td>
-                    <td>
-                      <router-link :to="'/clientes/editar/' + cliente.IdCliente"><button class="btn btn-link"><b-icon id="search-icon" icon="search"></b-icon></button></router-link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
@@ -166,6 +132,11 @@ export default {
 
   #search-icon{
     color: var(--color-background-buttons);
+  }
+
+  a{ 
+    text-decoration: none; 
+    color: var(--color-text-dark);
   }
 
 </style>

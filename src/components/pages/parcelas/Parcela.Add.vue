@@ -208,7 +208,10 @@
                 </b-tab>
                 <b-tab title="Parcela" active>
                     <div class="row">
-                        <div class="col-12">    
+                    <p> Você já possui {{contratos.FK_Parcelas_Contratos.length}} parcelas cadastradas neste contrato.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
                             <button v-if="contratos.FK_Parcelas_Contratos && contratos.FK_Parcelas_Contratos.length == 0" type="button" id="button-gerar-parcelas" class="btn btn-primary" @click="gerarParcelasPadrao">Gerar Automático</button>
                             <button type="button" id="button-gerar-parcelas" class="btn btn-primary" @click="adicionarParcelaManual">Gerar +1</button>
                             <button type="button" id="button-gerar-parcelas" class="btn btn-primary" @click="removerTodasParcelas">Apagar todos</button>
@@ -342,7 +345,7 @@ export default {
                 })
             }
             alert('Parcelas cadastradas com sucesso!') 
-            this.$router.push({ path: '/parcelas' })
+            setTimeout( () => this.$router.push({ path: '/parcelas' }), 3000);
         },
         adicionarParcelaManual(){
             if(this.id_parcelas.length == 0){

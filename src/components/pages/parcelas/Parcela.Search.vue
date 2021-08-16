@@ -31,36 +31,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12">      
-            <div id="table-search" class="shadow-sm p-3 mb-5 bg-white rounded">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Contrato</th>
-                    <th scope="col">Parcela</th>
-                    <th scope="col">Data Prevista</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Pago</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Ação</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="parcela of filteredParcelas" :key="parcela.IdParcela">
-                    <td>{{parcela.NomeCliente}}</td>
-                    <td>{{parcela.CodContrato}}</td>
-                    <td>{{parcela.NumParcela}}</td>
-                    <td>{{parcela.DataPrevista}}</td>
-                    <td>{{parcela.ValorParcela}}</td>
-                    <td>{{parcela.TotalValorPago}}</td>
-                    <td>{{parcela.StatusPagamento}}</td>
-                    <td>
-                      <router-link :to="'/parcelas/editar/' + parcela.IdParcela"><button class="btn btn-link"><b-icon id="search-icon" icon="search"></b-icon></button></router-link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <div id="table-search" class="shadow-sm">
+            <div class="col-12">
+              <b-table :bordered="true" outlined hover label-sort-desc="" label-sort-asc="" label-sort-clear="" :items="filteredParcelas" :fields="ColunasTabelaView">             
+                <template v-slot:cell()="data">
+                  <router-link :to="`/parcelas/editar/${data.item.IdParcela}`">{{ data.value }}</router-link>
+                </template>
+              </b-table>      
             </div>
           </div>
         </div>
@@ -68,17 +45,25 @@
       <!-- Modal para selecionar qual Contrato associar -->
       <div>
         <b-modal id="modal-1" hide-header>
-          <p>Selecione um contrato para continuar:</p>
           <div class="row">
+            <p>Selecione um cliente:</p>
             <div class="col-12">
-              <select v-model="contrato.IdContrato" class="form-select" aria-label="Default select example">
-                <option :value="contrato.IdContrato" v-for="contrato of contratos" :key="contrato.IdContrato"> Cliente: {{contrato.NomeCliente}} | Contrato: {{contrato.CodContrato}}</option>
+              <select v-model="clienteSelected" class="form-select" aria-label="Default select example">
+                <option :value="cliente.NomeCliente" v-for="cliente of filteredClientes" :key="cliente.NomeCliente"> {{cliente.NomeCliente}} </option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <p>Selecione um contrato:</p>
+            <div class="col-12">
+              <select v-model="contratoSelected" class="form-select" aria-label="Default select example">
+                <option :value="contrato.IdContrato" v-for="contrato of filteredContratos" :key="contrato.IdContrato"> {{contrato.CodContrato}} </option>
               </select>
             </div>
           </div>
           <template v-slot:modal-footer="{ close }">
             <b-button @click="close()">Cancelar</b-button>
-            <router-link :to ="'/contrato/' + contrato.IdContrato + '/parcela/cadastrar'"><b-button>Continuar</b-button></router-link>
+            <b-button @click="criarParcelas(contratoSelected)">Continuar</b-button>
           </template>
         </b-modal>
       </div>
@@ -99,12 +84,18 @@ export default {
         contratos: [],
         errors: [],
         selectedFilterSelect: "Nenhum",
-        contrato: {
-          IdContrato: '',
-          IdCliente: '',
-          NomeCliente: ''
-        },
-        clientesDistincts: ''
+        clienteSelected: '',
+        contratoSelected: '',
+        filteredClientes: [],
+        ColunasTabelaView: [
+          { key: 'NomeCliente', label: 'Cliente', sortable: true },
+          { key: 'CodContrato', label: 'Contrato', sortable: true },
+          { key: 'NumParcela', label: 'Parcela', sortable: true },
+          { key: 'DataPrevista', label: 'Data Prevista', sortable: true },
+          { key: 'ValorParcela', label: 'Valor', sortable: true },
+          { key: 'TotalValorPago', label: 'Pago', sortable: true },
+          { key: 'StatusPagamento', label: 'Status', sortable: true }
+        ]
       }
     },
 
@@ -127,6 +118,12 @@ export default {
         });
 
         return valores;
+      },
+      filteredContratos(){
+        let valores = [];
+        let x = this.clienteSelected;
+        valores = this.contratos.filter(function (contrato) { return (contrato.NomeCliente === x)})
+        return valores;
       }
     },
 
@@ -143,11 +140,19 @@ export default {
           this.contratos = res.data
           this.contratos.filter(function (contrato)
           {
-            return (contrato.StatusPagamento != 'Finalizado' &&
-                    contrato.StatusPagamento != 'Cancelado')
+            return (contrato.StatusContrato != 'Finalizado' &&
+                    contrato.StatusContrato != 'Cancelado')
           })
-          this.contratos.sort((contrato1,contrato2) => (contrato1.NomeCliente + '-' + contrato1.CodContrato) < (contrato2.NomeCliente + '-' + contrato2.CodContrato) ? -1 : 1)
+          this.filteredClientes = [...new Map(this.contratos.map(item => [item['NomeCliente'], item])).values()];
+          this.filteredClientes.sort((filteredClientes1,filteredClientes2) => (filteredClientes1.NomeCliente < filteredClientes2.NomeCliente) ? -1 : 1)
         })
+      },
+      criarParcelas(IdContrato){
+        if(IdContrato == null || IdContrato == ''){
+          alert('Selecione um contrato antes de continuar!')
+        } else {
+          this.$router.push({ path: '/contrato/' + IdContrato + '/parcela/cadastrar' })
+        }
       }
     }
 }
@@ -178,6 +183,11 @@ export default {
 
   #search-icon{
     color: var(--color-background-buttons);
+  }
+
+  a{ 
+    text-decoration: none; 
+    color: var(--color-text-dark);
   }
 
 </style>
