@@ -306,7 +306,7 @@ export default {
           FK_Contratos_Vendedores: '',
           FK_Parcelas_Contratos: '',
           FK_Recebimentos_Parcelas: '',
-          DataCancelamento: null,
+          DataCancelamento: '',
           createdAt: '',
           updatedAt: '',
           DeletedAt: ''
@@ -367,8 +367,11 @@ export default {
                     this.$v.$touch();
                 }
             else {
-                if(this.contrato.DataCancelamento != null){
+                if(this.contrato.DataCancelamento != null && this.contrato.DataCancelamento != '')
+                {
                     this.contrato.DataCancelamento = moment(this.contrato.DataCancelamento, "DD/MM/YYYY").format("YYYY-MM-DD");
+                } else{
+                    this.contrato.DataCancelamento = null;
                 }
                 var now = moment().format('YYYY-MM-DD hh:mm:ss')
                 this.contrato.updatedAt = now
